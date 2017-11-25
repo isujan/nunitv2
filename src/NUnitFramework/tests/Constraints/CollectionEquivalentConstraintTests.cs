@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework.Tests;
 
 #if CLR_2_0 || CLR_4_0

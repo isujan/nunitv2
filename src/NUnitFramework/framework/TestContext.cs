@@ -5,8 +5,9 @@
 // ****************************************************************
 using System;
 using System.Collections;
+#if !NETCOREAPP2_0
 using System.Runtime.Remoting.Messaging;
-
+#endif
 namespace NUnit.Framework
 {
     /// <summary>
