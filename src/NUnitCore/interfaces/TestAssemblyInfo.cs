@@ -48,10 +48,12 @@ namespace NUnit.Core
             this.moduleName = entryAssembly != null
 				? Path.GetFileName(Assembly.GetEntryAssembly().Location)
 				: p.MainModule.ModuleName;
+#if !NETCOREAPP2_0
             this.domainName = AppDomain.CurrentDomain.FriendlyName;
             this.appBase = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
             this.configFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
             this.binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;
+#endif
 		}
 
         /// <summary>

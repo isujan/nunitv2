@@ -157,6 +157,7 @@ namespace NUnit.Core
         /// </summary>
         public static RuntimeFramework CurrentFramework
         {
+#if !NETCOREAPP2_0
             get
             {
                 if (currentFramework == null)
@@ -226,6 +227,11 @@ namespace NUnit.Core
 
                 return currentFramework;
             }
+#else
+            get { return new RuntimeFramework(RuntimeType.Any, new Version(1, 0)); }
+#endif
+
+
         }
 
         /// <summary>
@@ -238,12 +244,12 @@ namespace NUnit.Core
                 if (availableFrameworks == null)
                 {
                     FrameworkCollection frameworks = new FrameworkCollection();
-
+#if !NETCOREAPP2_0
                     AppendDotNetFrameworks(frameworks);
                     AppendDefaultMonoFramework(frameworks);
                     // NYI
                     //AppendMonoFrameworks(frameworks);
-
+#endif
                     availableFrameworks = frameworks.ToArray();
                 }
 
@@ -310,9 +316,9 @@ namespace NUnit.Core
             get { return displayName; }
         }
 
-        #endregion
+#endregion
 
-        #region Public Methods
+#region Public Methods
 
         /// <summary>
         /// Parses a string representing a RuntimeFramework.
@@ -427,9 +433,9 @@ namespace NUnit.Core
                 && this.FrameworkVersion.Minor >= target.FrameworkVersion.Minor;
         }
 
-        #endregion
+#endregion
 
-        #region Helper Methods
+#region Helper Methods
 
         private static bool IsRuntimeTypeName(string name)
         {
@@ -459,7 +465,7 @@ namespace NUnit.Core
                   (v1.Build < 0 || v2.Build < 0 || v1.Build == v2.Build) &&
                   (v1.Revision < 0 || v2.Revision < 0 || v1.Revision == v2.Revision);
         }
-
+#if !NETCOREAPP2_0
         private static void AppendMonoFrameworks(FrameworkCollection frameworks)
         {
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
@@ -470,9 +476,11 @@ namespace NUnit.Core
 
         private static void AppendAllMonoFrameworks(FrameworkCollection frameworks)
         {
+
             // TODO: Find multiple installed Mono versions under Linux
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
+
                 // Use registry to find alternate versions
                 RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Novell\Mono");
                 if (key == null) return;
@@ -487,6 +495,7 @@ namespace NUnit.Core
             }
             else
                 AppendDefaultMonoFramework(frameworks);
+
         }
 
         // This method works for Windows and Linux but currently
@@ -518,7 +527,7 @@ namespace NUnit.Core
 
             AppendMonoFramework(frameworks, monoPrefix, version);
         }
-
+#endif
         private static void AppendMonoFramework(FrameworkCollection frameworks, string monoPrefix, string version)
         {
             if (monoPrefix != null)
@@ -549,7 +558,7 @@ namespace NUnit.Core
                 }
             }
         }
-
+#if !NETCOREAPP2_0
         private static void AppendDotNetFrameworks(FrameworkCollection frameworks)
         {
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
@@ -592,6 +601,7 @@ namespace NUnit.Core
                 frameworks.Add(new RuntimeFramework(RuntimeType.Net, version));
         }
 
+
         // Note: this method cannot be generalized past V4, because (a)  it has
         // specific code for detecting .NET 4.5 and (b) we don't know what
         // microsoft will do in the future
@@ -617,7 +627,7 @@ namespace NUnit.Core
         {
             return (int)key.GetValue("Install", 0) == 1;
         }
-
+#endif
 #if CLR_2_0 || CLR_4_0
         private class FrameworkCollection : System.Collections.Generic.List<RuntimeFramework> { }
 #else
@@ -630,6 +640,6 @@ namespace NUnit.Core
         }
 #endif
 
-        #endregion
+#endregion
     }
 }

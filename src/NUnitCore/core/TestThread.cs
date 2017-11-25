@@ -4,8 +4,13 @@
 // obtain a copy of the license at http://nunit.org.
 // ****************************************************************
 using System;
+#if !NETCOREAPP2_0
 using System.Runtime.Remoting.Messaging;
+#else
+using NUnit.Framework;
+#endif
 using System.Threading;
+
 
 namespace NUnit.Core
 {

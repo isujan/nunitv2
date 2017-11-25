@@ -7,9 +7,14 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using System.Globalization;
+#if !NETCOREAPP2_0
 using System.Runtime.Remoting.Messaging;
+#else
+using NUnit.Framework;
+#endif  
 using System.Security.Principal;
 using System.Threading;
+
 
 namespace NUnit.Core
 {
@@ -27,16 +32,16 @@ namespace NUnit.Core
 	/// </summary>
 	public class TestExecutionContext
 	{
-		#region Static Fields
+#region Static Fields
 
 		/// <summary>
 		/// The current context, head of the list of saved contexts.
 		/// </summary>
         private static TestExecutionContext current = new TestExecutionContext();
 
-        #endregion
+#endregion
 
-        #region Instance Fields
+#region Instance Fields
 
         /// <summary>
         /// Indicates whether trace is enabled
@@ -116,9 +121,9 @@ namespace NUnit.Core
         /// </summary>
         private ContextDictionary contextDictionary;
 
-        #endregion
+#endregion
 
-        #region Constructors
+#region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TestExecutionContext"/> class.
@@ -169,9 +174,9 @@ namespace NUnit.Core
             this.contextDictionary = new ContextDictionary(this);
         }
 
-        #endregion
+#endregion
 
-        #region Static Singleton Instance
+#region Static Singleton Instance
 
         /// <summary>
         /// Gets the current context.
@@ -182,9 +187,9 @@ namespace NUnit.Core
             get { return current; }
         }
 
-        #endregion
+#endregion
 
-        #region Properties
+#region Properties
 
         /// <summary>
         /// Controls whether trace and debug output are written
@@ -385,9 +390,9 @@ namespace NUnit.Core
             set { testPackage = value; }
         }
 
-        #endregion
+#endregion
 
-        #region Static Methods
+#region Static Methods
 
         /// <summary>
         /// Saves the old context and makes a fresh one 
@@ -415,9 +420,9 @@ namespace NUnit.Core
             CallContext.SetData("NUnit.Framework.TestContext", current.contextDictionary);
         }
 
-		#endregion
+#endregion
 
-        #region Instance Methods
+#region Instance Methods
 
         /// <summary>
         /// Used to restore settings to their prior
@@ -449,6 +454,6 @@ namespace NUnit.Core
             this.currentPrincipal = System.Threading.Thread.CurrentPrincipal;
         }
 
-        #endregion
+#endregion
 	}
 }

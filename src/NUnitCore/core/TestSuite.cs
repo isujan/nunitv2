@@ -13,18 +13,20 @@ namespace NUnit.Core
 	using System.Collections;
 	using System.Reflection;
 	using NUnit.Core.Filters;
-    using System.Runtime.Remoting.Messaging;
+#if !NETCOREAPP2_0
+using System.Runtime.Remoting.Messaging;
+#endif
 
 #if CLR_2_0 || CLR_4_0
     using System.Collections.Generic;
 using System.Diagnostics;
 #endif
 
-	/// <summary>
-	/// Summary description for TestSuite.
-	/// </summary>
-	/// 
-	[Serializable]
+    /// <summary>
+    /// Summary description for TestSuite.
+    /// </summary>
+    /// 
+    [Serializable]
 	public class TestSuite : Test
 	{
 		#region Fields

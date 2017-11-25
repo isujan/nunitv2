@@ -11,7 +11,9 @@ namespace NUnit.Core
 {
 	using System;
     using System.Collections;
-    using System.Runtime.Remoting.Messaging;
+#if !NETCOREAPP2_0
+using System.Runtime.Remoting.Messaging;
+#endif
     using System.Threading;
 	using System.Text;
 	using System.Text.RegularExpressions;

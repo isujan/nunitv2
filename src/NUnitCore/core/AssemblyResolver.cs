@@ -48,12 +48,16 @@ namespace NUnit.Core
 
 		public AssemblyResolver()
 		{
-			AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
+#if !CLR_2_0
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
+#endif
 		}
 
 		public void Dispose()
 		{
+#if !CLR_2_0
 			AppDomain.CurrentDomain.AssemblyResolve -= new ResolveEventHandler(CurrentDomain_AssemblyResolve);
+#endif
 		}
 
 		public void AddFile( string file )

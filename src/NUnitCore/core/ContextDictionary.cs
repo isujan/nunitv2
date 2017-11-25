@@ -6,11 +6,15 @@
 
 using System;
 using System.Collections;
+#if !NETCOREAPP2_0
 using System.Runtime.Remoting.Messaging;
-
+#endif
 namespace NUnit.Core
 {
-    public class ContextDictionary : MarshalByRefObject, IDictionary, ILogicalThreadAffinative
+    public class ContextDictionary : MarshalByRefObject, IDictionary
+#if !NETCOREAPP2_0
+        , ILogicalThreadAffinative
+#endif
     {
         internal TestExecutionContext _context;
 		private readonly Hashtable _storage = new Hashtable();
@@ -54,7 +58,7 @@ namespace NUnit.Core
             }
         }
 
-		#region IDictionary Interface non-implementation
+#region IDictionary Interface non-implementation
 
 		void IDictionary.Remove(object key)
 		{
@@ -126,6 +130,6 @@ namespace NUnit.Core
 			get { throw new NotImplementedException(); }
 		}
 
-		#endregion
+#endregion
     }
 }
