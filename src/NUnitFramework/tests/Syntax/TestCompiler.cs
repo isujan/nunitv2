@@ -3,7 +3,7 @@
 // This is free software licensed under the NUnit license. You may
 // obtain a copy of the license at http://nunit.org.
 // ****************************************************************
-
+#if !NETCOREAPP2_0
 using System;
 using System.CodeDom.Compiler;
 using System.IO;
@@ -55,3 +55,4 @@ namespace NUnit.Framework.Syntax
         }
     }
 }
+#endif

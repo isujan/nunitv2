@@ -52,6 +52,12 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>nunit.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -178,6 +184,7 @@
     <Compile Include="XmlEditor\XmlView.Designer.cs">
       <DependentUpon>XmlView.cs</DependentUpon>
     </Compile>
+    <None Include="nunit.snk" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
